@@ -5,6 +5,7 @@ import com.shailahir.apps.textlocal.config.TextLocalConfig;
 import com.shailahir.apps.textlocal.utils.TestConfigReader;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -109,6 +110,12 @@ public class TextlocalApiImplTests {
         List<String> numbers = new LinkedList<String>();
         numbers.add(TestConfigReader.getMobileNumber());
         target.sendMessage("Test Content", numbers, null);
+    }
+
+    @Ignore
+    @Test
+    public void sendMessageToGroupId() throws UnsupportedEncodingException, TextlocalException {
+        target.sendMessage("message", "1111010", null);
     }
 
     @After
