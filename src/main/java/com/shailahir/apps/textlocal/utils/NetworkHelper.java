@@ -33,9 +33,6 @@ public class NetworkHelper {
         try {
             HttpURLConnection conn = (HttpURLConnection) new URL(url).openConnection();
             conn.setDoOutput(true);
-//            conn.setRequestMethod("POST");
-//            conn.setRequestProperty("Content-Length", Integer.toString(data.length()));
-//            conn.getOutputStream().write(data.getBytes());
             final BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             final StringBuffer stringBuffer = new StringBuffer();
             String line;
