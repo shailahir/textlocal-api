@@ -23,7 +23,6 @@ public class JsonHelper {
 
     public static MessageSentResponse extractMessageSentResponse(String json) throws TextlocalException {
         handleResponse(json);
-        MessageSentResponse response = new Gson().fromJson(json, MessageSentResponse.class);
-        return response;
+        return new Gson().fromJson(json, MessageSentResponse.class);
     }
 }

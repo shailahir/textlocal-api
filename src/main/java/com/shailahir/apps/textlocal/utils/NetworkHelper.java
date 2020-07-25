@@ -8,7 +8,6 @@ import java.net.URL;
 public class NetworkHelper {
 
     public String post(String url, String data) {
-        System.out.println("posting data " + data);
         try {
             HttpURLConnection conn = (HttpURLConnection) new URL(url).openConnection();
             conn.setDoOutput(true);
@@ -16,13 +15,13 @@ public class NetworkHelper {
             conn.setRequestProperty("Content-Length", Integer.toString(data.length()));
             conn.getOutputStream().write(data.getBytes("UTF-8"));
             final BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            final StringBuffer stringBuffer = new StringBuffer();
+            final StringBuilder stringBuilder = new StringBuilder();
             String line;
             while ((line = rd.readLine()) != null) {
-                stringBuffer.append(line);
+                stringBuilder.append(line);
             }
             rd.close();
-            return stringBuffer.toString();
+            return stringBuilder.toString();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -34,13 +33,13 @@ public class NetworkHelper {
             HttpURLConnection conn = (HttpURLConnection) new URL(url).openConnection();
             conn.setDoOutput(true);
             final BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            final StringBuffer stringBuffer = new StringBuffer();
+            final StringBuilder stringBuilder = new StringBuilder();
             String line;
             while ((line = rd.readLine()) != null) {
-                stringBuffer.append(line);
+                stringBuilder.append(line);
             }
             rd.close();
-            return stringBuffer.toString();
+            return stringBuilder.toString();
         } catch (Exception e) {
             e.printStackTrace();
         }
