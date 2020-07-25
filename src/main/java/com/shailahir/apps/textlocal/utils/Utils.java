@@ -3,16 +3,6 @@ package com.shailahir.apps.textlocal.utils;
 import java.util.List;
 
 public class Utils {
-    public static String joinStrings(String[] arr) {
-        if (arr != null && arr.length > 0) {
-            StringBuffer buffer = new StringBuffer();
-            for (int i = 0; i < arr.length; i++) {
-                addStringToBuffer(arr[i], buffer);
-            }
-            return removeCommaFromBufferEnd(buffer);
-        }
-        return "";
-    }
 
     private static String removeCommaFromBufferEnd(StringBuffer buffer) {
         if (buffer.length() >= 1) {
@@ -22,7 +12,7 @@ public class Utils {
     }
 
     private static void addStringToBuffer(String number, StringBuffer buffer) {
-        if (number != null || number.trim().length() != 0) {
+        if (number != null && number.trim().length() != 0) {
             buffer.append(number);
             buffer.append(",");
         } else {

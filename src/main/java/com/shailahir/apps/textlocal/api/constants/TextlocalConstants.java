@@ -24,10 +24,10 @@ public class TextlocalConstants {
         CANNOT_SEND_MESSAGE(192, "You cannot send message at this time"),
         INVALID_CONFIG(60, "Textlocal Config is not valid");
 
-        private int errorCode;
-        private String errorMessage;
+        private final int errorCode;
+        private final String errorMessage;
 
-        Errors(int errorCode, String errorMessage) {
+        Errors(final int errorCode, final String errorMessage) {
             this.errorCode = errorCode;
             this.errorMessage = errorMessage;
         }
