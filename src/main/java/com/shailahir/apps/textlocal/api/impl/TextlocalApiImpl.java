@@ -3,7 +3,9 @@ package com.shailahir.apps.textlocal.api.impl;
 import com.shailahir.apps.textlocal.api.TextlocalApi;
 import com.shailahir.apps.textlocal.api.constants.TextlocalConstants;
 import com.shailahir.apps.textlocal.api.exception.TextlocalException;
+import com.shailahir.apps.textlocal.api.model.MessageSentResponse;
 import com.shailahir.apps.textlocal.config.TextLocalConfig;
+import com.shailahir.apps.textlocal.utils.JsonHelper;
 import com.shailahir.apps.textlocal.utils.NetworkHelper;
 import com.shailahir.apps.textlocal.utils.Utils;
 
@@ -24,7 +26,7 @@ public class TextlocalApiImpl implements TextlocalApi {
         networkHelper = new NetworkHelper();
     }
 
-    public void sendMessage(String message, List<String> numbers, String sender) throws TextlocalException, UnsupportedEncodingException {
+    public MessageSentResponse sendMessage(String message, List<String> numbers, String sender) throws TextlocalException, UnsupportedEncodingException {
         validateMessage(message);
         sender = validateSender(sender);
         validateNumbers(numbers);
@@ -39,8 +41,8 @@ public class TextlocalApiImpl implements TextlocalApi {
         if (config.getTestMode()) {
             buffer.append("&test=true");
         }
-        String response = sendToApi(config.getSendMessageUrl(), buffer.toString());
-        System.out.println("response " + response);
+        String jsonResponse = sendToApi(config.getSendMessageUrl(), buffer.toString());
+        return JsonHelper.extractMessageSentResponse(jsonResponse);
     }
 
     private String sendToApi(String url, String data) {
