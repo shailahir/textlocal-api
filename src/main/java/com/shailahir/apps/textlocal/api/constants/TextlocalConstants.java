@@ -22,7 +22,9 @@ public class TextlocalConstants {
         NO_VALID_NUMBERS_SPECIFIED(51, "No valid numbers specified"),
         SCHEDULE_TIME_NOT_ALLOWED(191, "Schedule time is outside that allowed"),
         CANNOT_SEND_MESSAGE(192, "You cannot send message at this time"),
-        INVALID_CONFIG(60, "Textlocal Config is not valid");
+        INVALID_CONFIG(60, "Textlocal Config is not valid"),
+        NO_URL_SPECIFIED(185, "No URL Specified"),
+        INVALID_URL(186, "Invalid URL Specified");
 
         private final int errorCode;
         private final String errorMessage;

@@ -4,6 +4,7 @@ import com.shailahir.apps.textlocal.api.TextlocalApi;
 import com.shailahir.apps.textlocal.api.constants.TextlocalConstants;
 import com.shailahir.apps.textlocal.api.exception.TextlocalException;
 import com.shailahir.apps.textlocal.api.model.MessageSentResponse;
+import com.shailahir.apps.textlocal.api.model.ShortUrlResponse;
 import com.shailahir.apps.textlocal.config.TextLocalConfig;
 import com.shailahir.apps.textlocal.utils.JsonHelper;
 import com.shailahir.apps.textlocal.utils.NetworkHelper;
@@ -221,6 +222,35 @@ public class TextlocalApiImpl implements TextlocalApi {
         }
         if (message.length() > 765) {
             throw new TextlocalException(TextlocalConstants.Errors.MESSAGE_TOO_LONG);
+        }
+    }
+
+    /**
+     * This command can be used to create a shortened URL using our built in Short URL Creator.
+     *
+     * @param urlToConvert
+     * @return
+     * @throws UnsupportedEncodingException
+     * @throws TextlocalException
+     */
+    public ShortUrlResponse createShortUrl(String urlToConvert) throws UnsupportedEncodingException, TextlocalException {
+        validateUrlBeforeConversion(urlToConvert);
+        StringBuilder builder = new StringBuilder("apikey=");
+        builder.append(this.config.getApiKey());
+        builder.append("&url=");
+        builder.append(URLEncoder.encode(urlToConvert, "UTF-8"));
+        String response = null;
+        if (this.config.getPreferGetMethodOverPost()) {
+            response = networkHelper.get(this.config.getCreateShortUrl() + "?" + builder.toString());
+        } else {
+            response = networkHelper.post(this.config.getCreateShortUrl(), builder.toString());
+        }
+        return JsonHelper.extractShortUrlResponse(response);
+    }
+
+    private void validateUrlBeforeConversion(String urlToConvert) throws TextlocalException {
+        if (urlToConvert == null || (urlToConvert != null && urlToConvert.trim().length() == 0)) {
+            throw new TextlocalException(TextlocalConstants.Errors.NO_URL_SPECIFIED);
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.shailahir.apps.textlocal.api.impl;
 
 import com.shailahir.apps.textlocal.api.exception.TextlocalException;
+import com.shailahir.apps.textlocal.api.model.ShortUrlResponse;
 import com.shailahir.apps.textlocal.config.TextLocalConfig;
 import com.shailahir.apps.textlocal.utils.TestConfigReader;
 import org.junit.After;
@@ -14,6 +15,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.LinkedList;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 @RunWith(JUnit4.class)
@@ -116,6 +118,36 @@ public class TextlocalApiImplTests {
     @Test
     public void sendMessageToGroupId() throws UnsupportedEncodingException, TextlocalException {
         target.sendMessage("message", "1111010", null);
+    }
+
+    @Test
+    public void createShortUrlPostMethod() throws TextlocalException, UnsupportedEncodingException {
+        TextLocalConfig config = new TextLocalConfig();
+        config.setTestMode(true);
+        config.setApiKey(TestConfigReader.getApiKey());
+        target = new TextlocalApiImpl(config);
+        ShortUrlResponse apiResponse = target.createShortUrl("https://google.co.in");
+        assertNotNull(apiResponse);
+        assertEquals("success", apiResponse.getStatus());
+        assertNotNull(apiResponse.getShortUrl());
+    }
+
+    @Test
+    public void createShortUrlGetMethod() throws TextlocalException, UnsupportedEncodingException {
+        TextLocalConfig config = new TextLocalConfig();
+        config.setTestMode(true);
+        config.setApiKey(TestConfigReader.getApiKey());
+        config.setPreferGetMethodOverPost(true);
+        target = new TextlocalApiImpl(config);
+        ShortUrlResponse apiResponse = target.createShortUrl("https://google.co.in");
+        assertNotNull(apiResponse);
+        assertEquals("success", apiResponse.getStatus());
+        assertNotNull(apiResponse.getShortUrl());
+    }
+
+    @Test(expected = TextlocalException.class)
+    public void createShortUrlExceptionCase() throws TextlocalException, UnsupportedEncodingException {
+        target.createShortUrl("");
     }
 
     @After
