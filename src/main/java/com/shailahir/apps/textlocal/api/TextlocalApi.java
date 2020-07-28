@@ -2,6 +2,7 @@ package com.shailahir.apps.textlocal.api;
 
 import com.shailahir.apps.textlocal.api.exception.TextlocalException;
 import com.shailahir.apps.textlocal.api.model.MessageSentResponse;
+import com.shailahir.apps.textlocal.api.model.ShortUrlResponse;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
@@ -38,7 +39,6 @@ public interface TextlocalApi {
     MessageSentResponse sendMessage(String message, String groupId, String sender, String scheduleTime) throws TextlocalException, UnsupportedEncodingException;
 
     MessageSentResponse sendMessage(String message, String groupId, String sender) throws TextlocalException, UnsupportedEncodingException;
-
-
-
+    
+    ShortUrlResponse createShortUrl(String urlToConvert) throws UnsupportedEncodingException, TextlocalException;
 }
