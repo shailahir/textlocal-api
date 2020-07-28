@@ -5,6 +5,7 @@ public class TextLocalConfig {
     private boolean preferGetMethodOverPost;
     private boolean testMode;
     private String sendMessageUrl = "https://api.textlocal.in/send";
+    private String createShortUrl = "https://api.textlocal.in/create_shorturl";
 
     public TextLocalConfig() {
 
@@ -47,4 +48,11 @@ public class TextLocalConfig {
     }
 
 
+    public void setUrlShortenUrl(String url) {
+        this.createShortUrl = url;
+    }
+
+    public String getCreateShortUrl() {
+        return createShortUrl;
+    }
 }

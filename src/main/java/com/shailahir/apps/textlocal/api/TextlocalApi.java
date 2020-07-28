@@ -40,4 +40,5 @@ public interface TextlocalApi {
     MessageSentResponse sendMessage(String message, String groupId, String sender) throws TextlocalException, UnsupportedEncodingException;
 
 
+
 }
