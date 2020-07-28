@@ -2,17 +2,8 @@ package com.shailahir.apps.textlocal.api.model;
 
 import java.util.List;
 
-public class ErrorsResponse {
-    private String status;
+public class ErrorsResponse extends BaseResponse {
     private List<Error> errors;
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
 
     public List<Error> getErrors() {
         return errors;
@@ -25,7 +16,7 @@ public class ErrorsResponse {
     @Override
     public String toString() {
         return "ErrorsResponse{" +
-                "status='" + status + '\'' +
+                "status='" + getStatus() + '\'' +
                 ", errors=" + errors +
                 '}';
     }

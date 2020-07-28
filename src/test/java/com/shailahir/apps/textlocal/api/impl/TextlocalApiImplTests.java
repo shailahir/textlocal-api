@@ -1,7 +1,7 @@
 package com.shailahir.apps.textlocal.api.impl;
 
 import com.shailahir.apps.textlocal.api.exception.TextlocalException;
-import com.shailahir.apps.textlocal.api.model.ShortUrlResponse;
+import com.shailahir.apps.textlocal.api.model.*;
 import com.shailahir.apps.textlocal.config.TextLocalConfig;
 import com.shailahir.apps.textlocal.utils.TestConfigReader;
 import org.junit.After;
@@ -12,6 +12,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -150,8 +151,63 @@ public class TextlocalApiImplTests {
         target.createShortUrl("");
     }
 
+    @Test
+    public void getContacts() throws TextlocalException {
+        GetContactsResponse apiResponse = target.getContactsByGroupId("1111010", 100);
+        assertNotNull(apiResponse);
+    }
+
+    @Test
+    public void getContactsByGroupIdAndNumber() throws TextlocalException {
+        GetContactsResponse apiResponse = target.getContactsByGroupIdAndNumber("1111010", "91123456789", 100);
+        System.out.println(apiResponse);
+        assertNotNull(apiResponse);
+    }
+
+    @Test
+    public void getGroups() throws TextlocalException {
+        GetGroupsResponse apiResponse = target.getGroups();
+        assertNotNull(apiResponse);
+        assertEquals("success", apiResponse.getStatus());
+    }
+
+    @Test
+    public void createGroup() throws TextlocalException, UnsupportedEncodingException {
+        CreateGroupResponse apiResponse = target.createGroups("TEST2");
+        assertNotNull(apiResponse);
+        assertEquals("success", apiResponse.getStatus());
+        BaseResponse response = target.deleteGroup(apiResponse.getGroup().getId() + "");
+        assertNotNull(response);
+        assertEquals("success", response.getStatus());
+    }
+
+    @Test
+    public void deleteGroup() throws UnsupportedEncodingException, TextlocalException {
+        CreateGroupResponse cgResponse = target.createGroups("TEST2");
+        assertNotNull(cgResponse);
+        assertNotNull(cgResponse.getGroup());
+        BaseResponse apiResponse = target.deleteGroup(cgResponse.getGroup().getId() + "");
+        assertNotNull(apiResponse);
+        assertEquals("success", apiResponse.getStatus());
+    }
+
+    @Test
+    public void createContact() throws TextlocalException {
+        List<String> numbers = new ArrayList<String>();
+        numbers.add("919988774455");
+        CreateContactResponse apiResponse = target.createContact("1111010", numbers);
+        assertNotNull(apiResponse);
+        assertEquals("success", apiResponse.getStatus());
+    }
+
+//    @Test
+//    public void deleteContact() {
+//
+//    }
+
     @After
     public void tearDown() {
         target = null;
     }
+
 }

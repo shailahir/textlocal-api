@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class MessageSentResponse {
+public class MessageSentResponse extends BaseResponse {
     @SerializedName("test_mode")
     private boolean testMode;
     private int balance;
@@ -21,7 +21,6 @@ public class MessageSentResponse {
     private String receiptUrl;
     private String custom;
     private List<SentMessage> messages;
-    private String status;
 
     public boolean isTestMode() {
         return testMode;
@@ -95,14 +94,6 @@ public class MessageSentResponse {
         this.messages = messages;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
     @Override
     public String toString() {
         return "MessageSentResponse{" +
@@ -115,7 +106,7 @@ public class MessageSentResponse {
                 ", receiptUrl='" + receiptUrl + '\'' +
                 ", custom='" + custom + '\'' +
                 ", messages=" + messages +
-                ", status='" + status + '\'' +
+                ", status='" + getStatus() + '\'' +
                 '}';
     }
 }

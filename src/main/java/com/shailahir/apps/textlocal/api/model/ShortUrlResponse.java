@@ -2,10 +2,9 @@ package com.shailahir.apps.textlocal.api.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class ShortUrlResponse {
+public class ShortUrlResponse extends BaseResponse {
     @SerializedName("shorturl")
     private String shortUrl;
-    private String status;
 
     public String getShortUrl() {
         return shortUrl;
@@ -15,19 +14,11 @@ public class ShortUrlResponse {
         this.shortUrl = shortUrl;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
     @Override
     public String toString() {
         return "ShortUrlResponse{" +
                 "shortUrl='" + shortUrl + '\'' +
-                ", status='" + status + '\'' +
+                ", status='" + getStatus() + '\'' +
                 '}';
     }
 }
