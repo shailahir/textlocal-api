@@ -164,13 +164,9 @@ public class TextLocalApiImpl implements TextLocalApi {
         builder.append(this.config.getApiKey());
         builder.append("&url=");
         builder.append(URLEncoder.encode(urlToConvert, UTF_8));
-        String response = null;
-        if (this.config.getPreferGetMethodOverPost()) {
-            response = networkHelper.get(this.config.getCreateShortUrl() + "?" + builder.toString());
-        } else {
-            response = networkHelper.post(this.config.getCreateShortUrl(), builder.toString());
-        }
-        return JsonHelper.extractShortUrlResponse(response);
+        String response = sendToApi(config.getCreateShortUrl(), builder.toString());
+        JsonHelper.handleResponse(response);
+        return JsonHelper.parse(response, ShortUrlResponse.class);
     }
 
     private void validateUrlBeforeConversion(String urlToConvert) throws TextlocalException {
