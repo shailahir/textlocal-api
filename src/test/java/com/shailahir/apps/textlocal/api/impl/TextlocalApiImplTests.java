@@ -1,6 +1,7 @@
 package com.shailahir.apps.textlocal.api.impl;
 
 import com.shailahir.apps.textlocal.api.exception.TextlocalException;
+import com.shailahir.apps.textlocal.api.model.*;
 import com.shailahir.apps.textlocal.config.TextLocalConfig;
 import com.shailahir.apps.textlocal.utils.TestConfigReader;
 import org.junit.After;
@@ -11,9 +12,11 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 @RunWith(JUnit4.class)
@@ -118,8 +121,119 @@ public class TextlocalApiImplTests {
         target.sendMessage("message", "1111010", null);
     }
 
+    @Test
+    public void createShortUrlPostMethod() throws TextlocalException, UnsupportedEncodingException {
+        TextLocalConfig config = new TextLocalConfig();
+        config.setTestMode(true);
+        config.setApiKey(TestConfigReader.getApiKey());
+        target = new TextlocalApiImpl(config);
+        ShortUrlResponse apiResponse = target.createShortUrl("https://google.co.in");
+        assertNotNull(apiResponse);
+        assertEquals("success", apiResponse.getStatus());
+        assertNotNull(apiResponse.getShortUrl());
+    }
+
+    @Test
+    public void createShortUrlGetMethod() throws TextlocalException, UnsupportedEncodingException {
+        TextLocalConfig config = new TextLocalConfig();
+        config.setTestMode(true);
+        config.setApiKey(TestConfigReader.getApiKey());
+        config.setPreferGetMethodOverPost(true);
+        target = new TextlocalApiImpl(config);
+        ShortUrlResponse apiResponse = target.createShortUrl("https://google.co.in");
+        assertNotNull(apiResponse);
+        assertEquals("success", apiResponse.getStatus());
+        assertNotNull(apiResponse.getShortUrl());
+    }
+
+    @Test(expected = TextlocalException.class)
+    public void createShortUrlExceptionCase() throws TextlocalException, UnsupportedEncodingException {
+        target.createShortUrl("");
+    }
+
+    @Test
+    public void getContacts() throws TextlocalException {
+        GetContactsResponse apiResponse = target.getContactsByGroupId("1111010", 100);
+        assertNotNull(apiResponse);
+    }
+
+    @Test
+    public void getContactsByGroupIdAndNumber() throws TextlocalException {
+        GetContactsResponse apiResponse = target.getContactsByGroupIdAndNumber("1111010", "91123456789", 100);
+        System.out.println(apiResponse);
+        assertNotNull(apiResponse);
+    }
+
+    @Test
+    public void getGroups() throws TextlocalException {
+        GetGroupsResponse apiResponse = target.getGroups();
+        assertNotNull(apiResponse);
+        assertEquals("success", apiResponse.getStatus());
+    }
+
+    @Test
+    public void createGroup() throws TextlocalException, UnsupportedEncodingException {
+        CreateGroupResponse apiResponse = target.createGroups("TEST2");
+        assertNotNull(apiResponse);
+        assertEquals("success", apiResponse.getStatus());
+        BaseResponse response = target.deleteGroup(apiResponse.getGroup().getId() + "");
+        assertNotNull(response);
+        assertEquals("success", response.getStatus());
+    }
+
+    @Test
+    public void deleteGroup() throws UnsupportedEncodingException, TextlocalException {
+        CreateGroupResponse cgResponse = target.createGroups("TEST2");
+        assertNotNull(cgResponse);
+        assertNotNull(cgResponse.getGroup());
+        BaseResponse apiResponse = target.deleteGroup(cgResponse.getGroup().getId() + "");
+        assertNotNull(apiResponse);
+        assertEquals("success", apiResponse.getStatus());
+    }
+
+    @Test
+    public void createContact() throws TextlocalException {
+        List<String> numbers = new ArrayList<String>();
+        numbers.add("919988774455");
+        CreateContactResponse apiResponse = target.createContact("1111010", numbers);
+        assertNotNull(apiResponse);
+        assertEquals("success", apiResponse.getStatus());
+    }
+
+    @Test
+    public void deleteContact() throws TextlocalException {
+        List<String> numbers = new ArrayList<String>();
+        numbers.add("919988774456");
+        CreateContactResponse apiResponse = target.createContact("1111010", numbers);
+        assertNotNull(apiResponse);
+        assertEquals("success", apiResponse.getStatus());
+        DeleteContactResponse delResponse = target.deleteContact("1111010", "919988774456");
+        assertNotNull(delResponse);
+        assertEquals("success", delResponse.getStatus());
+    }
+
+    @Test
+    public void createBulkContacts() throws TextlocalException {
+        List<Contact> contacts = new ArrayList<Contact>();
+        Contact contact1 = new Contact();
+        contact1.setFirstName("First Contact");
+        contact1.setLastName("Last1");
+        contact1.setNumber("919988776657");
+        contacts.add(contact1);
+        Contact contact2 = new Contact();
+        contact2.setFirstName("Second Contact");
+        contact2.setLastName("Last2");
+        contact2.setNumber("919988776658");
+        contacts.add(contact2);
+        CreateBulkContactResponse apiResponse = target.createBulkContacts("1111010", contacts);
+        System.out.println(apiResponse);
+        assertNotNull(apiResponse);
+        assertEquals("success", apiResponse.getStatus());
+    }
+
     @After
     public void tearDown() {
         target = null;
     }
+
 }

@@ -5,6 +5,14 @@ public class TextLocalConfig {
     private boolean preferGetMethodOverPost;
     private boolean testMode;
     private String sendMessageUrl = "https://api.textlocal.in/send";
+    private String createShortUrl = "https://api.textlocal.in/create_shorturl";
+    private String getContactsUrl = "https://api.textlocal.in/get_contacts";
+    private String getGroupsUrl = "https://api.textlocal.in/get_groups";
+    private String createGroupUrl = "https://api.textlocal.in/create_group";
+    private String deleteGroupUrl = "https://api.textlocal.in/delete_group";
+    private String createContactUrl = "https://api.textlocal.in/create_contacts";
+    private String deleteContactUrl = "https://api.textlocal.in/delete_contact";
+    private String createBulkContactUrl = "https://api.textlocal.in/create_contacts_bulk";
 
     public TextLocalConfig() {
 
@@ -47,4 +55,67 @@ public class TextLocalConfig {
     }
 
 
+    public void setUrlShortenUrl(String url) {
+        this.createShortUrl = url;
+    }
+
+    public String getCreateShortUrl() {
+        return createShortUrl;
+    }
+
+    public String getGetContactsUrl() {
+        return getContactsUrl;
+    }
+
+    public void setGetContactsUrl(String getContactsUrl) {
+        this.getContactsUrl = getContactsUrl;
+    }
+
+    public String getGetGroupsUrl() {
+        return getGroupsUrl;
+    }
+
+    public void setGetGroupsUrl(String getGroupsUrl) {
+        this.getGroupsUrl = getGroupsUrl;
+    }
+
+    public String getCreateGroupUrl() {
+        return createGroupUrl;
+    }
+
+    public void setCreateGroupUrl(String createGroupUrl) {
+        this.createGroupUrl = createGroupUrl;
+    }
+
+    public String getDeleteGroupUrl() {
+        return deleteGroupUrl;
+    }
+
+    public void setDeleteGroupUrl(String deleteGroupUrl) {
+        this.deleteGroupUrl = deleteGroupUrl;
+    }
+
+    public String getCreateContactUrl() {
+        return createContactUrl;
+    }
+
+    public void setCreateContactUrl(String createContactUrl) {
+        this.createContactUrl = createContactUrl;
+    }
+
+    public String getDeleteContactUrl() {
+        return deleteContactUrl;
+    }
+
+    public void setDeleteContactUrl(String deleteContactUrl) {
+        this.deleteContactUrl = deleteContactUrl;
+    }
+
+    public String getCreateBulkContactUrl() {
+        return createBulkContactUrl;
+    }
+
+    public void setCreateBulkContactUrl(String createBulkContactUrl) {
+        this.createBulkContactUrl = createBulkContactUrl;
+    }
 }
