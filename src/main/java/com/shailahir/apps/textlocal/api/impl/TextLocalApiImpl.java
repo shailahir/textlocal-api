@@ -18,6 +18,25 @@ import java.util.List;
 
 public class TextLocalApiImpl implements TextLocalApi {
 
+    public static final String GROUP_ID = "&group_id=";
+    public static final String CONTACTS = "&contacts=";
+    public static final String APIKEY = "apikey=";
+    public static final String NUMBER = "&number=";
+    public static final String NUMBERS = "&numbers=";
+    public static final String NAME = "&name=";
+    public static final String UTF_8 = "UTF-8";
+    public static final String LIMIT = "&limit=";
+    public static final String TXTLCL = "TXTLCL";
+    public static final String MESSAGE = "&message=";
+    public static final String SENDER = "&sender=";
+    public static final String SCHEDULE_TIME = "&schedule_time=";
+    public static final String RECEIPT_URL = "&receipt_url=";
+    public static final String CUSTOM = "&custom=";
+    public static final String OPTOUTS_TRUE = "&optouts=true";
+    public static final String VALIDITY = "&validity=";
+    public static final String UNICODE_TRUE = "&unicode=true";
+    public static final String TRACKING_LINKS_TRUE = "&tracking_links=true";
+    public static final String TEST_TRUE = "&test=true";
     private final TextLocalConfig config;
     private final NetworkHelper networkHelper;
 
@@ -34,50 +53,50 @@ public class TextLocalApiImpl implements TextLocalApi {
         if (request != null) {
             validateMessage(request.getMessage());
             String sender = validateSender(request.getSender());
-            StringBuffer buffer = new StringBuffer("apikey=");
+            StringBuffer buffer = new StringBuffer(APIKEY);
             buffer.append(this.config.getApiKey());
-            buffer.append("&message=");
-            buffer.append(URLEncoder.encode(request.getMessage(), "UTF-8"));
-            buffer.append("&sender=");
+            buffer.append(MESSAGE);
+            buffer.append(URLEncoder.encode(request.getMessage(), UTF_8));
+            buffer.append(SENDER);
             buffer.append(sender);
             if (request.getNumbers() != null) {
                 validateNumbers(request.getNumbers());
-                buffer.append("&numbers=");
+                buffer.append(NUMBERS);
                 buffer.append(Utils.joinStrings(request.getNumbers()));
             } else {
-                buffer.append("&group_id=");
-                buffer.append(URLEncoder.encode(String.valueOf(request.getGroupId()), "UTF-8"));
+                buffer.append(GROUP_ID);
+                buffer.append(URLEncoder.encode(String.valueOf(request.getGroupId()), UTF_8));
             }
             if (request.getScheduleTime() != null) {
                 validateUnixTimestamp(request.getScheduleTime());
-                buffer.append("&schedule_time=");
-                buffer.append(URLEncoder.encode(request.getScheduleTime(), "UTF-8"));
+                buffer.append(SCHEDULE_TIME);
+                buffer.append(URLEncoder.encode(request.getScheduleTime(), UTF_8));
             }
             if (request.getReceiptUrl() != null) {
                 validateUrl(request.getReceiptUrl());
-                buffer.append("&receipt_url=");
-                buffer.append(URLEncoder.encode(request.getReceiptUrl(), "UTF-8"));
+                buffer.append(RECEIPT_URL);
+                buffer.append(URLEncoder.encode(request.getReceiptUrl(), UTF_8));
             }
             if (request.getCustom() != null) {
-                buffer.append("&custom=");
-                buffer.append(URLEncoder.encode(request.getCustom(), "UTF-8"));
+                buffer.append(CUSTOM);
+                buffer.append(URLEncoder.encode(request.getCustom(), UTF_8));
             }
             if (request.isOptOutsFlag()) {
-                buffer.append("&optouts=true");
+                buffer.append(OPTOUTS_TRUE);
             }
             if (request.getValidity() != null) {
                 validateUnixTimestamp(request.getValidity());
-                buffer.append("&validity=");
-                buffer.append(URLEncoder.encode(request.getValidity(), "UTF-8"));
+                buffer.append(VALIDITY);
+                buffer.append(URLEncoder.encode(request.getValidity(), UTF_8));
             }
             if (request.isUnicodeFlag()) {
-                buffer.append("&unicode=true");
+                buffer.append(UNICODE_TRUE);
             }
             if (request.isTrackingLinksFlag()) {
-                buffer.append("&tracking_links=true");
+                buffer.append(TRACKING_LINKS_TRUE);
             }
             if (config.getTestMode()) {
-                buffer.append("&test=true");
+                buffer.append(TEST_TRUE);
             }
             String response = sendToApi(config.getSendMessageUrl(), buffer.toString());
             JsonHelper.handleResponse(response);
@@ -117,7 +136,7 @@ public class TextLocalApiImpl implements TextLocalApi {
 
     private String validateSender(String sender) {
         if (sender == null || sender.trim().length() == 0) {
-            sender = "TXTLCL";
+            sender = TXTLCL;
         }
         return sender;
     }
@@ -141,10 +160,10 @@ public class TextLocalApiImpl implements TextLocalApi {
      */
     public ShortUrlResponse createShortUrl(String urlToConvert) throws UnsupportedEncodingException, TextlocalException {
         validateUrlBeforeConversion(urlToConvert);
-        StringBuilder builder = new StringBuilder("apikey=");
+        StringBuilder builder = new StringBuilder(APIKEY);
         builder.append(this.config.getApiKey());
         builder.append("&url=");
-        builder.append(URLEncoder.encode(urlToConvert, "UTF-8"));
+        builder.append(URLEncoder.encode(urlToConvert, UTF_8));
         String response = null;
         if (this.config.getPreferGetMethodOverPost()) {
             response = networkHelper.get(this.config.getCreateShortUrl() + "?" + builder.toString());
@@ -170,11 +189,11 @@ public class TextLocalApiImpl implements TextLocalApi {
      */
     public GetContactsResponse getContactsByGroupId(String groupId, int limit) throws TextlocalException {
         if (groupId != null && groupId.trim().length() > 0) {
-            StringBuilder builder = new StringBuilder("apikey=");
+            StringBuilder builder = new StringBuilder(APIKEY);
             builder.append(this.config.getApiKey());
-            builder.append("&group_id=");
+            builder.append(GROUP_ID);
             builder.append(groupId);
-            builder.append("&limit=");
+            builder.append(LIMIT);
             builder.append(limit == 0 ? 100 : limit);
             String response = sendToApi(config.getGetContactsUrl(), builder.toString());
             JsonHelper.handleResponse(response);
@@ -197,13 +216,13 @@ public class TextLocalApiImpl implements TextLocalApi {
     public GetContactsResponse getContactsByGroupIdAndNumber(String groupId, String number, int limit) throws TextlocalException {
         if (groupId != null && groupId.trim().length() > 0) {
             validateNumbers(Arrays.asList(new String[]{number}));
-            StringBuilder builder = new StringBuilder("apikey=");
+            StringBuilder builder = new StringBuilder(APIKEY);
             builder.append(this.config.getApiKey());
-            builder.append("&group_id=");
+            builder.append(GROUP_ID);
             builder.append(groupId);
-            builder.append("&number=");
+            builder.append(NUMBER);
             builder.append(number);
-            builder.append("&limit=");
+            builder.append(LIMIT);
             builder.append(limit == 0 ? 100 : limit);
             String response = sendToApi(config.getGetContactsUrl(), builder.toString());
             JsonHelper.handleResponse(response);
@@ -219,7 +238,7 @@ public class TextLocalApiImpl implements TextLocalApi {
      * @throws TextlocalException
      */
     public GetGroupsResponse getGroups() throws TextlocalException {
-        StringBuilder builder = new StringBuilder("apikey=");
+        StringBuilder builder = new StringBuilder(APIKEY);
         builder.append(config.getApiKey());
         String response = sendToApi(config.getGetGroupsUrl(), builder.toString());
         JsonHelper.handleResponse(response);
@@ -233,10 +252,10 @@ public class TextLocalApiImpl implements TextLocalApi {
      * @return
      */
     public CreateGroupResponse createGroups(String groupName) throws TextlocalException, UnsupportedEncodingException {
-        StringBuilder builder = new StringBuilder("apikey=");
+        StringBuilder builder = new StringBuilder(APIKEY);
         builder.append(config.getApiKey());
-        builder.append("&name=");
-        builder.append(URLEncoder.encode(groupName, "UTF-8"));
+        builder.append(NAME);
+        builder.append(URLEncoder.encode(groupName, UTF_8));
         String response = sendToApi(config.getCreateGroupUrl(), builder.toString());
         JsonHelper.handleResponse(response);
         return JsonHelper.parse(response, CreateGroupResponse.class);
@@ -251,9 +270,9 @@ public class TextLocalApiImpl implements TextLocalApi {
      * @return
      */
     public BaseResponse deleteGroup(String groupId) throws TextlocalException {
-        StringBuilder builder = new StringBuilder("apikey=");
+        StringBuilder builder = new StringBuilder(APIKEY);
         builder.append(config.getApiKey());
-        builder.append("&group_id=");
+        builder.append(GROUP_ID);
         builder.append(groupId);
         String response = sendToApi(config.getDeleteGroupUrl(), builder.toString());
         JsonHelper.handleResponse(response);
@@ -270,11 +289,11 @@ public class TextLocalApiImpl implements TextLocalApi {
      */
     public CreateContactResponse createContact(String groupId, List<String> numbers) throws TextlocalException {
         validateNumbers(numbers);
-        StringBuilder builder = new StringBuilder("apikey=");
+        StringBuilder builder = new StringBuilder(APIKEY);
         builder.append(config.getApiKey());
-        builder.append("&numbers=");
+        builder.append(NUMBERS);
         builder.append(Utils.joinStrings(numbers));
-        builder.append("&group_id=");
+        builder.append(GROUP_ID);
         builder.append(groupId);
         String response = sendToApi(config.getCreateContactUrl(), builder.toString());
         JsonHelper.handleResponse(response);
@@ -292,11 +311,11 @@ public class TextLocalApiImpl implements TextLocalApi {
      * @throws TextlocalException
      */
     public DeleteContactResponse deleteContact(String groupId, String number) throws TextlocalException {
-        StringBuilder builder = new StringBuilder("apikey=");
+        StringBuilder builder = new StringBuilder(APIKEY);
         builder.append(config.getApiKey());
-        builder.append("&group_id=");
+        builder.append(GROUP_ID);
         builder.append(groupId);
-        builder.append("&number=");
+        builder.append(NUMBER);
         builder.append(number);
         String response = sendToApi(config.getDeleteContactUrl(), builder.toString());
         JsonHelper.handleResponse(response);
@@ -304,11 +323,11 @@ public class TextLocalApiImpl implements TextLocalApi {
     }
 
     public CreateBulkContactResponse createBulkContacts(String groupId, List<Contact> contacts) throws TextlocalException {
-        StringBuilder builder = new StringBuilder("apikey=");
+        StringBuilder builder = new StringBuilder(APIKEY);
         builder.append(config.getApiKey());
-        builder.append("&group_id=");
+        builder.append(GROUP_ID);
         builder.append(groupId);
-        builder.append("&contacts=");
+        builder.append(CONTACTS);
         builder.append(new Gson().toJson(contacts));
         String response = sendToApi(config.getCreateBulkContactUrl(), builder.toString());
         JsonHelper.handleResponse(response);
