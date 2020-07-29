@@ -20,11 +20,6 @@ public class JsonHelper {
         }
     }
 
-    public static MessageSentResponse extractMessageSentResponse(String json) throws TextlocalException {
-        handleResponse(json);
-        return new Gson().fromJson(json, MessageSentResponse.class);
-    }
-
     public static ShortUrlResponse extractShortUrlResponse(String response) throws TextlocalException {
         handleResponse(response);
         return new Gson().fromJson(response, ShortUrlResponse.class);
@@ -63,5 +58,9 @@ public class JsonHelper {
     public static CreateBulkContactResponse extractCreateBulkContactResponse(String response) throws TextlocalException {
         handleResponse(response);
         return new Gson().fromJson(response, CreateBulkContactResponse.class);
+    }
+
+    public static <T> T parse(String response, Class<T> claz) {
+        return new Gson().fromJson(response, claz);
     }
 }
