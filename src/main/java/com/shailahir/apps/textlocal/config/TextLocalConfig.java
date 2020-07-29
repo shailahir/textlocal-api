@@ -11,6 +11,8 @@ public class TextLocalConfig {
     private String createGroupUrl = "https://api.textlocal.in/create_group";
     private String deleteGroupUrl = "https://api.textlocal.in/delete_group";
     private String createContactUrl = "https://api.textlocal.in/create_contacts";
+    private String deleteContactUrl = "https://api.textlocal.in/delete_contact";
+    private String createBulkContactUrl = "https://api.textlocal.in/create_contacts_bulk";
 
     public TextLocalConfig() {
 
@@ -99,5 +101,21 @@ public class TextLocalConfig {
 
     public void setCreateContactUrl(String createContactUrl) {
         this.createContactUrl = createContactUrl;
+    }
+
+    public String getDeleteContactUrl() {
+        return deleteContactUrl;
+    }
+
+    public void setDeleteContactUrl(String deleteContactUrl) {
+        this.deleteContactUrl = deleteContactUrl;
+    }
+
+    public String getCreateBulkContactUrl() {
+        return createBulkContactUrl;
+    }
+
+    public void setCreateBulkContactUrl(String createBulkContactUrl) {
+        this.createBulkContactUrl = createBulkContactUrl;
     }
 }

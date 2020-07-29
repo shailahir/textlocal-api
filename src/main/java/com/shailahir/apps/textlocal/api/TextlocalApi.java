@@ -50,4 +50,8 @@ public interface TextlocalApi {
     GetContactsResponse getContactsByGroupIdAndNumber(String groupId, String number, int limit) throws TextlocalException;
 
     CreateContactResponse createContact(String groupId, List<String> numbers) throws TextlocalException;
+
+    DeleteContactResponse deleteContact(String groupId, String number) throws TextlocalException;
+
+    CreateBulkContactResponse createBulkContacts(String groupId, List<Contact> contacts) throws TextlocalException;
 }
