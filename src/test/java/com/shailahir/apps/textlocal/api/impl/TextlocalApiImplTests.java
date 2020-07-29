@@ -200,10 +200,36 @@ public class TextlocalApiImplTests {
         assertEquals("success", apiResponse.getStatus());
     }
 
-//    @Test
-//    public void deleteContact() {
-//
-//    }
+    @Test
+    public void deleteContact() throws TextlocalException {
+        List<String> numbers = new ArrayList<String>();
+        numbers.add("919988774456");
+        CreateContactResponse apiResponse = target.createContact("1111010", numbers);
+        assertNotNull(apiResponse);
+        assertEquals("success", apiResponse.getStatus());
+        DeleteContactResponse delResponse = target.deleteContact("1111010", "919988774456");
+        assertNotNull(delResponse);
+        assertEquals("success", delResponse.getStatus());
+    }
+
+    @Test
+    public void createBulkContacts() throws TextlocalException {
+        List<Contact> contacts = new ArrayList<Contact>();
+        Contact contact1 = new Contact();
+        contact1.setFirstName("First Contact");
+        contact1.setLastName("Last1");
+        contact1.setNumber("919988776657");
+        contacts.add(contact1);
+        Contact contact2 = new Contact();
+        contact2.setFirstName("Second Contact");
+        contact2.setLastName("Last2");
+        contact2.setNumber("919988776658");
+        contacts.add(contact2);
+        CreateBulkContactResponse apiResponse = target.createBulkContacts("1111010", contacts);
+        System.out.println(apiResponse);
+        assertNotNull(apiResponse);
+        assertEquals("success", apiResponse.getStatus());
+    }
 
     @After
     public void tearDown() {

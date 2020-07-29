@@ -54,4 +54,14 @@ public class JsonHelper {
         handleResponse(response);
         return new Gson().fromJson(response, CreateContactResponse.class);
     }
+
+    public static DeleteContactResponse extractDeleteContactResponse(String response) throws TextlocalException {
+        handleResponse(response);
+        return new Gson().fromJson(response, DeleteContactResponse.class);
+    }
+
+    public static CreateBulkContactResponse extractCreateBulkContactResponse(String response) throws TextlocalException {
+        handleResponse(response);
+        return new Gson().fromJson(response, CreateBulkContactResponse.class);
+    }
 }

@@ -1,5 +1,6 @@
 package com.shailahir.apps.textlocal.api.impl;
 
+import com.google.gson.Gson;
 import com.shailahir.apps.textlocal.api.TextlocalApi;
 import com.shailahir.apps.textlocal.api.constants.TextlocalConstants;
 import com.shailahir.apps.textlocal.api.exception.TextlocalException;
@@ -397,5 +398,47 @@ public class TextlocalApiImpl implements TextlocalApi {
             response = networkHelper.post(config.getCreateContactUrl(), builder.toString());
         }
         return JsonHelper.extractCreateContactResponse(response);
+    }
+
+    /**
+     * This command will remove a contact from a specific group.
+     *
+     * @param groupId ID of the group. Can either be found within Messenger (in the "Reports" - "Advanced Reports" -
+     *                "List of Group ID's" section) or by running the get_groups command. Additionally group 5 contains
+     *                "contacts" and group 6 contains "opt-outs".
+     * @param number  Mobile number of the contact to be deleted in international format (i.e. 918123456789).
+     * @return
+     * @throws TextlocalException
+     */
+    public DeleteContactResponse deleteContact(String groupId, String number) throws TextlocalException {
+        StringBuilder builder = new StringBuilder("apikey=");
+        builder.append(config.getApiKey());
+        builder.append("&group_id=");
+        builder.append(groupId);
+        builder.append("&number=");
+        builder.append(number);
+        String response = null;
+        if (config.getPreferGetMethodOverPost()) {
+            response = networkHelper.get(config.getDeleteContactUrl() + "?" + builder.toString());
+        } else {
+            response = networkHelper.post(config.getDeleteContactUrl(), builder.toString());
+        }
+        return JsonHelper.extractDeleteContactResponse(response);
+    }
+
+    public CreateBulkContactResponse createBulkContacts(String groupId, List<Contact> contacts) throws TextlocalException {
+        StringBuilder builder = new StringBuilder("apikey=");
+        builder.append(config.getApiKey());
+        builder.append("&group_id=");
+        builder.append(groupId);
+        builder.append("&contacts=");
+        builder.append(new Gson().toJson(contacts));
+        String response = null;
+        if (config.getPreferGetMethodOverPost()) {
+            response = networkHelper.get(config.getCreateBulkContactUrl() + "?" + builder.toString());
+        } else {
+            response = networkHelper.post(config.getCreateBulkContactUrl(), builder.toString());
+        }
+        return JsonHelper.extractCreateBulkContactResponse(response);
     }
 }
