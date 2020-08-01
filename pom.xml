@@ -4,7 +4,7 @@
 
     <groupId>com.shailahir.apps</groupId>
     <artifactId>textlocal-api</artifactId>
-    <version>0.1.0</version>
+    <version>0.1.1-SNAPSHOT</version>
 
     <name>TextLocal API Client [Un-official]</name>
     <description>Java Client for Textlocal SMS API</description>
@@ -138,7 +138,7 @@
         <connection>scm:git:git@github.com:shailahir/textlocal-api.git</connection>
         <developerConnection>scm:git:git@github.com:shailahir/textlocal-api.git</developerConnection>
         <url>https://github.com/shailahir/textlocal-api</url>
-        <tag>textlocal-api-0.1.0</tag>
+        <tag>HEAD</tag>
     </scm>
 
 
