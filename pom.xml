@@ -6,6 +6,27 @@
     <artifactId>textlocal-api</artifactId>
     <version>0.1.1-SNAPSHOT</version>
 
+    <name>TextLocal API Client [Un-official]</name>
+    <description>Java Client for Textlocal SMS API</description>
+    <url>https://github.com/shailahir/textlocal-api</url>
+    <licenses>
+        <license>
+            <url>https://opensource.org/licenses/MIT</url>
+            <name>MIT</name>
+        </license>
+    </licenses>
+    <developers>
+        <developer>
+            <name>Shailendra Ahir</name>
+            <organization>shailahir.com</organization>
+            <roles>
+                <role>Developer</role>
+                <role>Support</role>
+                <role>Tester</role>
+            </roles>
+        </developer>
+    </developers>
+
     <properties>
         <sonar.projectKey>shailahir_textlocal-api</sonar.projectKey>
         <sonar.organization>shailahir</sonar.organization>
