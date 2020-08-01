@@ -23,7 +23,7 @@ public class NetworkHelper {
             rd.close();
             return stringBuilder.toString();
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
         return null;
     }
@@ -41,7 +41,7 @@ public class NetworkHelper {
             rd.close();
             return stringBuilder.toString();
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
         return null;
     }
